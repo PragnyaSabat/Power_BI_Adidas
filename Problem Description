@@ -1,0 +1,360 @@
+# Document Link
+https://drive.google.com/file/d/1t5REaA0CNZZIyP4dqKG5xLnZewrGu4v6/view?usp=sharing
+
+# Retail Customer Retention Analytics – ADIDAS
+Problem Statement & Step-by-Step Implementation Approach
+## 1️⃣ Problem Statement
+### 1.1 Business Context
+
+Adidas operates across retail stores, franchise outlets, and online platforms globally. Despite having extensive customer transaction and loyalty data, the organization lacks a centralized analytical framework to:
+
+Identify customers who are likely to churn
+
+Measure retention and repeat behavior accurately
+
+Evaluate loyalty tier effectiveness
+
+Assess promotion impact on revenue and churn
+
+Compare performance across store types and channels
+
+Identify high-value customers for strategic retention
+
+The absence of consolidated analytics restricts Adidas from executing data-driven retention strategies and improving customer lifetime value.
+
+### 1.2 Core Business Problems
+
+Customer Churn Uncertainty
+
+No consolidated KPI to measure churn rate.
+
+Lack of segmentation of churned vs active customers.
+
+Retention & Repeat Purchase Gap
+
+No structured analysis of repeat behavior.
+
+No tier-based purchase frequency segmentation.
+
+Loyalty Program Inefficiency
+
+Unclear relationship between points earned and redeemed.
+
+No measurement of churn rate across loyalty tiers.
+
+Promotion Effectiveness Ambiguity
+
+Uncertain impact of promotions on purchase value.
+
+No comparison between promotional vs non-promotional transactions.
+
+Store & Channel Performance Variability
+
+No unified analysis of store type performance.
+
+Unknown relationship between store maturity and retention.
+
+Lack of Customer Lifetime Value (CLV) Segmentation
+
+No systematic CLV calculation.
+
+No identification of high-value customers.
+
+### 1.3 Objective
+
+To design and develop a multi-page Power BI Customer Retention Dashboard that:
+
+Consolidates multiple datasets
+
+Builds actionable KPIs
+
+Enables dynamic segmentation
+
+Identifies high-value and at-risk customers
+
+Supports strategic business decisions
+
+## 2️⃣ Dataset Overview
+
+As described in the project document 
+
+C3_Project_ Adidas Retail Custo…
+
+, the following datasets were used:
+
+Customer_Demographics
+
+Customer_Transactions
+
+Store_Locations
+
+Loyalty_Program
+
+Churn_Labelled_Customers
+
+These datasets were integrated through Customer_ID and Store_ID relationships.
+
+## 3️⃣ Step-by-Step Implementation Approach
+### Task 1: Data Modeling & Cleaning
+#### Step 1: Data Import
+
+Loaded all CSV files into Power BI.
+
+Opened Power Query Editor.
+
+#### Step 2: Data Cleaning
+
+Removed duplicate Customer_ID entries.
+
+Checked for missing values.
+
+Corrected data types:
+
+Date columns → Date type
+
+Amount → Decimal
+
+Categorical fields → Text
+
+#### Step 3: Created Calculated Columns
+
+Membership Duration
+
+Membership_Duration = 
+DATEDIFF(Membership_Since, TODAY(), YEAR)
+
+
+Extracted Transaction Year
+
+Transaction_Year = YEAR(Transaction_Date)
+
+
+Extracted Transaction Month
+
+Transaction_Month = FORMAT(Transaction_Date, "MMM")
+
+#### Step 4: Data Modeling
+
+Created relationships:
+
+Customer_Demographics ↔ Transactions
+
+Transactions ↔ Store_Locations
+
+Customer ↔ Loyalty_Program
+
+Customer ↔ Churn_Labelled_Customers
+
+### Task 2: Churn & Retention Metrics
+#### Step 1: Total Customers
+Total_Customers = DISTINCTCOUNT(Customer_ID)
+
+#### Step 2: Churned Customers
+Churned_Customers =
+CALCULATE(
+COUNTROWS(Churn_Labelled_Customers),
+Churn_Flag = 1
+)
+
+#### Step 3: Churn Rate KPI
+Churn_Rate = 
+DIVIDE([Churned_Customers], [Total_Customers], 0) * 100
+
+#### Step 4: Visualizations
+
+Clustered column charts:
+
+Churn by Region
+
+Churn by Income Level
+
+Churn by Loyalty Tier
+
+Churn by Channel
+
+Funnel Chart:
+
+Total → Repeat → Churned
+
+### Task 3: Repeat Purchase Analysis
+#### Step 1: Calculate Transaction Count
+Transaction_Count = COUNT(Transaction_ID)
+
+#### Step 2: Customer Segmentation
+
+0–3 → Low Tier
+
+4–8 → Mid Tier
+
+9+ → High Tier
+
+#### Step 3: Comparative Analysis
+
+Avg purchase frequency by:
+
+Region
+
+Age Group
+
+Loyalty Tier
+
+#### Step 4: Category Insights
+
+Identified top product categories among loyal customers.
+
+### Task 4: Promotion & Loyalty Impact
+#### Step 1: Promotion Percentage
+Promotion_Percentage =
+DIVIDE(
+COUNTROWS(FILTER(Transactions, Promotion_Applied = "Yes")),
+COUNTROWS(Transactions)
+) * 100
+
+#### Step 2: Comparative Metrics
+
+Avg Purchase Amount:
+
+With Promotion
+
+Without Promotion
+
+#### Step 3: Loyalty Analysis
+
+Churn by Loyalty Tier
+
+Points Earned vs Redeemed by Tier
+
+#### Step 4: Derived Recommendations
+
+Improve redemption balance
+
+Reward repeat behavior
+
+Target elite tier churn risk
+
+### Task 5: Store & Channel Performance
+#### Step 1: Merge Store Data
+
+Joined Store_Locations with Transactions via Store_ID.
+
+#### Step 2: Metrics Created
+
+Avg Transaction by Store Type
+
+Churn Rate by Store Type
+
+Correlation:
+
+Store Opening Year vs Retention Rate
+
+#### Step 3: Insights
+
+Mature stores show stronger retention patterns.
+
+Franchise stores contribute high-value segments.
+
+### Task 6: Customer Lifetime Value (CLV)
+#### Step 1: CLV Calculation
+CLV = 
+DIVIDE(Total_Spend, Membership_Duration, 0)
+
+#### Step 2: CLV Segmentation
+
+Low CLV
+
+Medium CLV
+
+High CLV
+
+#### Step 3: CLV Visualizations
+
+CLV vs Days Since Last Purchase
+
+CLV by Loyalty Tier
+
+CLV by Region
+
+### Task 7: Dashboard Development
+#### Page 1: Executive KPIs
+
+Churn Rate KPI
+
+CLV KPI
+
+Repeat Rate KPI
+
+Trend by Membership Duration
+
+#### Page 2: Loyalty & Promotion
+
+Promotion Usage
+
+Points Earned vs Redeemed
+
+Loyalty Tier Behavior
+
+#### Page 3: Store & Channel Insights
+
+Store Type vs Region
+
+Channel Preference
+
+#### Page 4: Customer Segmentation
+
+Churned vs Repeat vs High-Value
+
+Income & Region analysis
+
+Slicers Added
+
+Region
+
+Channel
+
+Income
+
+Loyalty Tier
+
+##4️⃣ Strategic Business Recommendations
+
+Prioritize Elite & Premium Tier Customers
+
+High revenue impact
+
+Improve point redemption balance
+
+Strengthen Underperforming Channels
+
+Optimize online engagement
+
+Enhance store-level retention campaigns
+
+Optimize Loyalty Strategy
+
+Increase incentives for repeat purchases
+
+Personalized offers for high-CLV customers
+
+## 5️⃣ Deliverables
+
+Power BI (.pbix file)
+
+Multi-page interactive dashboard
+
+Executive Summary
+
+KPI Documentation
+
+Video Presentation (3–5 minutes)
+
+## 6️⃣ Expected Business Impact
+
+Data-driven churn mitigation
+
+Improved retention strategy
+
+Higher CLV optimization
+
+Better channel performance tracking
+
+Targeted loyalty engagement
